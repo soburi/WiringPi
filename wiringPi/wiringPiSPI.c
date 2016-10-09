@@ -100,15 +100,21 @@ int wiringPiSPIDataRW (int channel, unsigned char *data, int len)
 int wiringPiSPISetupMode (int channel, int speed, int mode)
 {
   int fd ;
-
-  mode    &= 3 ;	// Mode is 0, 1, 2 or 3
   channel &= 1 ;	// Channel is 0 or 1
 
   if ((fd = open (channel == 0 ? spiDev0 : spiDev1, O_RDWR)) < 0)
     return wiringPiFailure (WPI_ALMOST, "Unable to open SPI device: %s\n", strerror (errno)) ;
 
-  spiSpeeds [channel] = speed ;
   spiFds    [channel] = fd ;
+
+  return wiringPiSPIConfig (channel, speed, mode) ;
+}
+
+int wiringPiSPIConfig (int channel, int speed, int mode)
+{
+  int fd = spiFds[channel & 1] ;
+  spiSpeeds [channel & 1] = speed ;
+  mode    &= 3 ;	// Mode is 0, 1, 2 or 3
 
 // Set SPI parameters.
 
