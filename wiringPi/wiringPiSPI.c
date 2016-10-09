@@ -27,6 +27,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
+#include <unistd.h>
 #include <sys/ioctl.h>
 #include <linux/spi/spidev.h>
 
@@ -133,4 +134,11 @@ int wiringPiSPISetupMode (int channel, int speed, int mode)
 int wiringPiSPISetup (int channel, int speed)
 {
   return wiringPiSPISetupMode (channel, speed, 0) ;
+}
+
+int wiringPiSPIClose (int channel)
+{
+  int ret = close (spiFds [channel & 1]) ;
+  spiFds [channel & 1] = 0 ;
+  return ret ;
 }
