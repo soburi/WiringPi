@@ -1583,12 +1583,15 @@ int analogRead (int pin)
 
 void analogWrite (int pin, int value)
 {
+  pwmWrite(pin, value);
+#if 0
   struct wiringPiNodeStruct *node = wiringPiNodes ;
 
   if ((node = wiringPiFindNode (pin)) == NULL)
     return ;
 
   node->analogWrite (node, pin, value) ;
+#endif
 }
 
 
