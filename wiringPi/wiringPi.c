@@ -1932,7 +1932,7 @@ static void initialiseEpoch (void)
   epochMicro = (uint64_t)tv.tv_sec * (uint64_t)1000000 + (uint64_t)(tv.tv_usec) ;
 }
 
-
+#if 0
 /*
  * delay:
  *	Wait for some number of milliseconds
@@ -2034,7 +2034,7 @@ unsigned int micros (void)
 
   return (uint32_t)(now - epochMicro) ;
 }
-
+#endif
 
 /*
  * wiringPiSetup:
